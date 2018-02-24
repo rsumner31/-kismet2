@@ -489,6 +489,25 @@ Kis_80211_Phy::Kis_80211_Phy(GlobalRegistry *in_globalreg,
 	alert_wpsbrute_ref =
 		globalreg->alertracker->ActivateConfiguredAlert("WPSBRUTE", phyid);
 
+	alert_chan_ref =
+		globalreg->alertracker->ActivateConfiguredAlert("CHANCHANGE");
+	alert_dhcpcon_ref =
+		globalreg->alertracker->ActivateConfiguredAlert("DHCPCONFLICT");
+	alert_bcastdcon_ref =
+		globalreg->alertracker->ActivateConfiguredAlert("BCASTDISCON");
+	alert_airjackssid_ref = 
+		globalreg->alertracker->ActivateConfiguredAlert("AIRJACKSSID");
+	alert_wepflap_ref =
+		globalreg->alertracker->ActivateConfiguredAlert("CRYPTODROP");
+	alert_dhcpname_ref =
+		globalreg->alertracker->ActivateConfiguredAlert("DHCPNAMECHANGE");
+	alert_dhcpos_ref =
+		globalreg->alertracker->ActivateConfiguredAlert("DHCPOSCHANGE");
+	alert_adhoc_ref =
+		globalreg->alertracker->ActivateConfiguredAlert("ADHOCCONFLICT");
+	alert_ssidmatch_ref =
+		globalreg->alertracker->ActivateConfiguredAlert("APSPOOF");
+
 	// Do we process the whole data packet?
     if (globalreg->kismet_config->FetchOptBoolean("hidedata", 0) ||
 		globalreg->kismet_config->FetchOptBoolean("dontbeevil", 0)) {
@@ -673,6 +692,7 @@ dot11_ssid *Kis_80211_Phy::BuildSSID(uint32_t ssid_csum,
 	else if (packinfo->subtype == packet_sub_probe_resp)
 		adssid->type = dot11_ssid_proberesp;
 
+#if 0
 	// If it's a probe response record it in the SSID cache, we only record
 	// one per BSSID for now and only if we have a cloaked SSID on this record.
 	// While we're at it, also figure out if we're responding for SSIDs we've never
@@ -762,6 +782,7 @@ dot11_ssid *Kis_80211_Phy::BuildSSID(uint32_t ssid_csum,
 			}
 		}
 	}
+#endif
 
 	return adssid;
 }
